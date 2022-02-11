@@ -24,7 +24,7 @@ export const signup = async (req: Request, res: Response) => {
 			},
 		});
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
@@ -48,6 +48,6 @@ export const signin = async (req: Request, res: Response) => {
 			},
 		});
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };

@@ -6,7 +6,7 @@ import { Cart } from '../services/CartService';
 export const addProduct = async (req: Request, res: Response) => {
 	try {
 		if (req.params.product_id.length !== 24)
-			return res.json('Invalid product id');
+			return res.json('Invalid product id').status(400);
 
 		const user = req.user as IUser;
 		const cart = new Cart(user._id.toString(), req.params.product_id);
@@ -19,14 +19,14 @@ export const addProduct = async (req: Request, res: Response) => {
 			`The product '${product.title}' was added to your cart successfully`,
 		);
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
 export const removeProduct = async (req: Request, res: Response) => {
 	try {
 		if (req.params.product_id.length !== 24)
-			return res.json('Invalid product id');
+			return res.json('Invalid product id').status(400);
 
 		const user = req.user as IUser;
 		const cart = new Cart(user._id.toString(), req.params.product_id);
@@ -37,7 +37,7 @@ export const removeProduct = async (req: Request, res: Response) => {
 
 		res.json(`The product '${product.title}' was removed from your cart`);
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
@@ -54,7 +54,7 @@ export const removeQtdProduct = async (req: Request, res: Response) => {
 			`One quantity of '${product.title}' was remove from from your cart`,
 		);
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
@@ -67,6 +67,6 @@ export const getInfo = async (req: Request, res: Response) => {
 
 		res.json({ cart });
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };

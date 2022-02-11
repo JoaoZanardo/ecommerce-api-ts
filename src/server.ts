@@ -33,8 +33,7 @@ app.use(orderRouter);
 app.use(middleware.errorHandler);
 
 app.use((req, res) => {
-	res.status(404);
-	res.json({ error: 'Endpoint not found' });
+	res.status(404).json({ error: 'Endpoint not found' });
 });
 
 app.listen(process.env.PORT);

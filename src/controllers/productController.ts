@@ -11,14 +11,14 @@ export const createAction = async (req: Request, res: Response) => {
 
 		res.json(`Product '${product.product?.title}' created succesfully`);
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
 export const deleteAction = async (req: Request, res: Response) => {
 	try {
 		if (req.params.product_id.length !== 24)
-			return res.json('Invalid product id');
+			return res.json('Invalid product id').status(400);
 
 		const product = await Product.deleteAction(req.params.product_id);
 
@@ -26,7 +26,7 @@ export const deleteAction = async (req: Request, res: Response) => {
 
 		res.json(`Product '${product.title}' deleted successfully`);
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
@@ -34,7 +34,7 @@ export const updateAction = async (req: Request, res: Response) => {
 	try {
 		console.log(req.body);
 		if (req.params.product_id.length !== 24)
-			return res.json('Invalid product id');
+			return res.json('Invalid product id').status(400);
 
 		const product = new Product(req.body);
 		await product.updateAction(
@@ -47,21 +47,21 @@ export const updateAction = async (req: Request, res: Response) => {
 
 		res.json(`Product '${product.product?.title}' edited succesfully`);
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
 export const getInfo = async (req: Request, res: Response) => {
 	try {
 		if (req.params.product_id.length !== 24)
-			return res.json('Invalid product id');
+			return res.json('Invalid product id').status(400);
 
 		const product = await Product.getInfo(req.params.product_id);
 		if (!product) return res.json('Product not found');
 
 		res.json(product);
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
@@ -70,6 +70,6 @@ export const getList = async (req: Request, res: Response) => {
 		const products = await Product.getList(req.query);
 		res.json(products);
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };

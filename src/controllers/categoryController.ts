@@ -16,26 +16,28 @@ export const createAction = async (req: Request, res: Response) => {
 			},
 		});
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
 export const deleteAction = async (req: Request, res: Response) => {
 	try {
-		if (req.params.category_id.length !== 24) return res.json('Invalid id');
+		if (req.params.category_id.length !== 24)
+			return res.json('Invalid id').status(400);
 
 		const category = await Category.delete(req.params.category_id);
-		if (!category) return res.json('Category not found');
+		if (!category) return res.json({ error: 'Category not found' });
 
 		res.json(`Category '${category.name}' deleted succesfully`);
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
 export const updateAction = async (req: Request, res: Response) => {
 	try {
-		if (req.params.category_id.length !== 24) return res.json('Invalid id');
+		if (req.params.category_id.length !== 24)
+			return res.json('Invalid id').status(400);
 		const category = new Category(req.body);
 		await category.update(req.params.category_id);
 
@@ -49,13 +51,14 @@ export const updateAction = async (req: Request, res: Response) => {
 			},
 		});
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
 export const getInfo = async (req: Request, res: Response) => {
 	try {
-		if (req.params.category_id.length !== 24) return res.json('Invalid id');
+		if (req.params.category_id.length !== 24)
+			return res.json('Invalid id').status(400);
 		const category = await Category.getInfo(req.params.category_id);
 
 		if (!category) return res.json({ errors: 'Category not found' });
@@ -67,7 +70,7 @@ export const getInfo = async (req: Request, res: Response) => {
 			},
 		});
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
@@ -76,6 +79,6 @@ export const getList = async (req: Request, res: Response) => {
 		const categories = await Category.getList();
 		res.json({ categories });
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };

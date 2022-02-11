@@ -5,7 +5,7 @@ import { User } from '../services/UserService';
 export const deleteAction = async (req: Request, res: Response) => {
 	try {
 		if (req.params.user_id.length !== 24)
-			return res.json({ error: 'Invalid user id ' });
+			return res.json({ error: 'Invalid user id ' }).status(400);
 
 		const user = new User(req.params.user_id);
 		await user.delete();
@@ -14,7 +14,7 @@ export const deleteAction = async (req: Request, res: Response) => {
 
 		res.json(`Id (${user.user?._id}) deleted succesfully`);
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
@@ -36,7 +36,7 @@ export const updateAction = async (req: Request, res: Response) => {
 			},
 		});
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
@@ -57,7 +57,7 @@ export const getList = async (req: Request, res: Response) => {
 
 		res.json({ users });
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
@@ -76,6 +76,6 @@ export const getInfo = async (req: Request, res: Response) => {
 			},
 		});
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };

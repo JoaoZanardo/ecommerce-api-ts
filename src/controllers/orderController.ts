@@ -13,7 +13,7 @@ export const checkoutAction = async (req: Request, res: Response) => {
 
 		res.json({ order: order.order });
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
@@ -23,7 +23,7 @@ export const getList = async (req: Request, res: Response) => {
 
 		res.json({ orderList });
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
@@ -37,7 +37,7 @@ export const getUserOrders = async (req: Request, res: Response) => {
 
 		res.json({ orders });
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
 
@@ -46,7 +46,7 @@ export const getInfo = async (req: Request, res: Response) => {
 		const user = req.user as IUser;
 
 		if (req.params.order_id.length !== 24)
-			return res.json('Invalid order id');
+			return res.json('Invalid order id').status(400);
 
 		const order = new Order(user._id.toString());
 		const orderInfo = await order.getInfo(req.params.order_id);
@@ -55,6 +55,6 @@ export const getInfo = async (req: Request, res: Response) => {
 
 		res.json({ orderInfo });
 	} catch (e) {
-		console.log(e);
+		res.status(500).json(e);
 	}
 };
