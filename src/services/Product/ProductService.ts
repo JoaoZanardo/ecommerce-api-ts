@@ -1,6 +1,6 @@
 import { unlink } from 'fs/promises';
 import sharp from 'sharp';
-import { Category } from '../Category/CategoryService';
+import { Category } from '../CategoryService';
 import { ProductValide } from './ProductValide';
 import dotenv from 'dotenv';
 import {

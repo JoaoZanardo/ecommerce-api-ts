@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Category } from '../services/Category/CategoryService';
+import { Category } from '../services/CategoryService';
 
 export const createAction = async (req: Request, res: Response) => {
 	try {

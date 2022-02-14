@@ -1,8 +1,8 @@
 import {
 	CategoryType,
 	ICategoryService,
-} from '../../interfaces/category/categoryInterface';
-import { CategoryModel } from '../../models/CategoryModel';
+} from '../interfaces/category/categoryInterface';
+import { CategoryModel } from '../models/CategoryModel';
 
 export class Category implements ICategoryService {
 	public readonly errors: string[] = [];
